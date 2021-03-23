@@ -195,19 +195,20 @@ promise
 // }
 // promiseTest();
 
-const promise1 = Promise.resolve("성공1");
-const promise2 = Promise.resolve("성공2");
-(async () => {
-  for await (_promise of [promise1, promise2]) {
-    console.log(_promise);
-  }
-})();
+// const promise1 = Promise.resolve("성공1");
+// const promise2 = Promise.resolve("성공2");
+// (async () => {
+//   for await (_promise of [promise1, promise2]) {
+//     console.log(_promise);
+//   }
+// })();
 
-async function findAndSaveUser(Users) {}
-findAndSaveUser().then(() => {
-  console.log("끝!");
-});
-(async () => {
-  const result = await findAndSaveUser();
-  console.log("끝!");
-})();
+// async function findAndSaveUser(Users) {}
+// findAndSaveUser().then(() => {
+//   console.log("끝!");
+// });
+// // 또는
+// (async () => {
+//   const result = await findAndSaveUser();
+//   console.log("끝!");
+// })();
