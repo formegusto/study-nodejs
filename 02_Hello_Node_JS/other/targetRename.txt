@@ -1,0 +1,28 @@
+test
+오
+오;;
+
+개쩐다;;
+
+저장 누를때마다 콘솔창에 뜹니다
+/*
+change target.txt
+change target.txt
+change target.txt
+change target.txt
+change target.txt
+rename target.txt
+change target.txt
+change target.txt
+*/
+요로케~~
+
+이름도 바꾸면 뜹니다.
+/*
+rename targetRename.txt
+change targetRename.txt
+*/
+
+하지만 이름 변경이후에는 watch가 수행되지 않습니다. 되는디?
+아 두번씩 되기도 하네
+아아;오케이 굳굳
