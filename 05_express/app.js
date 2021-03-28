@@ -68,16 +68,26 @@ app.post(
   }
 );
 
-app.get(
-  "/",
-  (req, res, next) => {
-    console.log("GET / 요청에서만 실행된다.");
-    next();
-  },
-  (req, res) => {
-    throw new Error("에러는 에러 처리 미들웨어로 갑니다.");
-  }
-);
+// app.get(
+//   "/",
+//   (req, res, next) => {
+//     console.log("GET / 요청에서만 실행된다.");
+//     next();
+//   },
+//   (req, res) => {
+//     throw new Error("에러는 에러 처리 미들웨어로 갑니다.");
+//   }
+// );
+
+const indexRouter = require("./routes");
+const userRouter = require("./routes/user");
+
+app.use("/", indexRouter);
+app.use("/user", userRouter);
+
+app.use((req, res, next) => {
+  res.status(404).send("Not Found");
+});
 
 app.use((err, req, res, next) => {
   console.error(err);
