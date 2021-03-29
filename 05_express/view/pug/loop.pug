@@ -1,0 +1,14 @@
+doctype html 
+html 
+    head 
+        title= title 
+    body 
+        ul
+            each fruit in ["사과", "배", "오렌지", "바나나", "복숭아"]
+                li= fruit
+        ul 
+            each fruit in fruits
+                li= fruit
+        ul 
+            each fruit, index in fruits
+                li= index + ":" + fruit

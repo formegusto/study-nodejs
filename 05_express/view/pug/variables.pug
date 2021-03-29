@@ -1,0 +1,16 @@
+doctype html
+html 
+    head 
+        title= title 
+    body
+        h1= title 
+        p #{title} 페이지 입니다.
+        button(class=title, type="submit") 전송
+        input(placeholder=title + " 연습")
+
+        - const node = "Node.js"
+        - const js = "JavaScript"
+        p #{node}와 #{js}
+
+        p= '<string>이스케이프</string>'
+        p!= '<string>이스케이프 하지 않음</string>'
