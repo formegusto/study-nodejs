@@ -9,6 +9,8 @@ const path = require("path");
 dotenv.config();
 const app = express();
 app.set("port", process.env.PORT || 3000);
+app.set("views", path.join(__dirname, "view/pug"));
+app.set("view engine", "pug");
 
 app.use(morgan("dev"));
 app.use("/", express.static(path.join(__dirname, "public")));
@@ -81,9 +83,11 @@ app.post(
 
 const indexRouter = require("./routes");
 const userRouter = require("./routes/user");
+const pugRouter = require("./routes/pug");
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);
+app.use("/pug", pugRouter);
 
 app.use((req, res, next) => {
   res.status(404).send("Not Found");
