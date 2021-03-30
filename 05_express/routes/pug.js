@@ -31,6 +31,14 @@ router.get("/case", (req, res) => {
   });
 });
 
+router.get("/include", (req, res) => {
+  res.render("include");
+});
+
+router.get("/body", (req, res) => {
+  res.render("body");
+});
+
 /*
 router.get("/variables", (req, res, next) => {
   res.locals.title = "변수";
