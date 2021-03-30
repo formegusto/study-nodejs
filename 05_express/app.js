@@ -9,8 +9,16 @@ const path = require("path");
 dotenv.config();
 const app = express();
 app.set("port", process.env.PORT || 3000);
-app.set("views", path.join(__dirname, "view/pug"));
-app.set("view engine", "pug");
+// app.set("views", path.join(__dirname, "view/pug"));
+// app.set("view engine", "pug");
+
+const nunjucks = require("nunjucks");
+app.set("view engine", "html");
+
+nunjucks.configure("view/nunjucks", {
+  express: app,
+  watch: true,
+});
 
 app.use(morgan("dev"));
 app.use("/", express.static(path.join(__dirname, "public")));
@@ -84,14 +92,29 @@ app.post(
 const indexRouter = require("./routes");
 const userRouter = require("./routes/user");
 const pugRouter = require("./routes/pug");
+const nunjucksRouter = require("./routes/nunjucks");
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/pug", pugRouter);
+app.use("/nunjucks", nunjucksRouter);
 
 app.use((req, res, next) => {
   res.status(404).send("Not Found");
 });
+
+// app.use((err, req, res, next) => {
+//   res.locals.error =
+//     process.env.NODE_ENV !== "production"
+//       ? {
+//           status: err.status || 500,
+//           message: err.message,
+//         }
+//       : {};
+//   console.log(res.locals.error);
+//   res.status(err.status || 500);
+//   res.render("error");
+// });
 
 app.use((err, req, res, next) => {
   console.error(err);

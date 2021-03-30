@@ -1,0 +1,8 @@
+{% set isLoggedIn = false %}
+{% if isLoggedIn %}
+<div>로그인 하셨습니다.</div>
+{% else %}
+<div>로그인 하시죠?</div>
+{% endif %}
+
+<div>{{  '로그인 하셨습니다.' if isLoggedIn else '로그인 하시죠?' }}</div>
