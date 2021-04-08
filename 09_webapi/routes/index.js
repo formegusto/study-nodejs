@@ -14,7 +14,7 @@ router.get("/", async (req, res, next) => {
     });
     res.render("login", {
       user,
-      domains: user && user.Domain,
+      domains: user && user.Domains,
     });
   } catch (err) {
     console.error(err);
