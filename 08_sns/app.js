@@ -13,7 +13,7 @@ const passportConfig = require("./passport");
 
 const app = express();
 passportConfig(); // 패스포트 설정
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 8000);
 app.set("view engine", "html");
 
 const { sequelize } = require("./models");
