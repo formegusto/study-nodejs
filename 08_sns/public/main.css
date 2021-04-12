@@ -159,7 +159,10 @@ textarea {
   font-weight: bold;
   margin-right: 10px;
 }
-.twit-follow {
+.twit-follow,
+.twit-like,
+.twit-unlike,
+.post-delete {
   padding: 1px 5px;
   background: #fff;
   border: 1px solid silver;

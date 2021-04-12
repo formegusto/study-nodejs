@@ -32,6 +32,14 @@
             <div class="twit-author">{{twit.User.nick}}</div>
             {% if not followerIdList.includes(twit.User.id) and twit.User.id !== user.id %}
               <button class="twit-follow">팔로우하기</button>
+              {% if twit.LikePost.length !== 0 %}
+              <button class="twit-unlike">좋아요 취소</button>
+              {% else %}
+              <button class="twit-like">좋아요 등록</button>
+              {% endif %}
+            {% endif %}
+            {% if twit.User.id === user.id %}
+              <button class="post-delete">게시글 삭제</button>
             {% endif %}
             <div class="twit-content">{{twit.content}}</div>
             {% if twit.img %}
@@ -80,5 +88,44 @@
         }
       });
     });
+
+    document.querySelectorAll('.twit-like').forEach(function(like) {
+      like.addEventListener('click', function() {
+        const twitId = like.parentNode.querySelector(".twit-id").value;
+        if(twitId) {
+          axios.post(`/post/${twitId}/like`).then(() => {
+            location.reload();
+          }).catch((err) => {
+            console.error(err);
+          });
+        } 
+      });
+    });
+
+    document.querySelectorAll('.twit-unlike').forEach(function(like) {
+      like.addEventListener('click', function() {
+        const twitId = like.parentNode.querySelector(".twit-id").value;
+        if(twitId) {
+          axios.delete(`/post/${twitId}/like`).then(() => {
+            location.reload();
+          }).catch((err) => {
+            console.error(err);
+          });
+        } 
+      });
+    });
+
+    document.querySelectorAll('.post-delete').forEach(function(like) {
+      like.addEventListener('click', function() {
+        const twitId = like.parentNode.querySelector(".twit-id").value;
+        if(twitId) {
+          axios.delete(`/post/${twitId}`).then(() => {
+            location.reload();
+          }).catch((err) => {
+            console.error(err);
+          });
+        } 
+      });
+    })
   </script>
 {% endblock %}

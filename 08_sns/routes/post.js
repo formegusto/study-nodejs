@@ -63,4 +63,57 @@ router.post("/", isLoggedIn, upload2.none(), async (req, res, next) => {
   }
 });
 
+router.delete("/:id", isLoggedIn, async (req, res, next) => {
+  try {
+    const result = await Post.destroy({ where: { id: req.params.id } });
+
+    console.log(result);
+    res.send("success");
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
+router.post("/:id/like", isLoggedIn, async (req, res, next) => {
+  try {
+    const post = await Post.findOne({ where: { id: req.params.id } });
+    if (!post) {
+      const error = new Error("존재하지 않는 게시물 입니다.");
+      error.status = 404;
+      next(error);
+    } else {
+      console.log(post.addLikePost(req.user));
+      res.send("success");
+    }
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
+router.delete("/:id/like", isLoggedIn, async (req, res, next) => {
+  try {
+    const post = await Post.findOne({ where: { id: req.params.id } });
+    if (!post) {
+      const error = new Error("존재하지 않는 게시물 입니다.");
+      error.status = 404;
+      next(error);
+    } else {
+      const PostLike = Post.sequelize.models.PostLike;
+      const result = PostLike.destroy({
+        where: {
+          UserId: req.user.id,
+          PostId: req.params.id,
+        },
+      });
+      console.log(result);
+      res.send("success");
+    }
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
 module.exports = router;
