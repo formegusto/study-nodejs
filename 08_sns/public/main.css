@@ -21,6 +21,21 @@ body {
   vertical-align: top;
   font-size: 12px;
 }
+
+.unfol {
+  display: inline-block;
+  padding: 0 5px;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 4px;
+  background: white;
+  border: 1px solid silver;
+  color: crimson;
+  height: 100%;
+  vertical-align: top;
+  font-size: 12px;
+}
+
 input[type="text"],
 input[type="email"],
 input[type="password"],

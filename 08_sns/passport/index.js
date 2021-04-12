@@ -3,12 +3,16 @@ const local = require("./localStrategy");
 const kakao = require("./kakaoStrategy");
 const User = require("../models/user");
 
+const cache = [];
 module.exports = () => {
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
 
   passport.deserializeUser((id, done) => {
+    const cacheUser = cache.find((c) => c.id === id);
+    if (cacheUser) return done(null, cacheUser);
+
     User.findOne({
       where: { id },
       include: [
@@ -24,7 +28,11 @@ module.exports = () => {
         },
       ],
     })
-      .then((user) => done(null, user))
+      .then((user) => {
+        cache.push(user);
+
+        return done(null, user);
+      })
       .catch((err) => done(err));
   });
 
