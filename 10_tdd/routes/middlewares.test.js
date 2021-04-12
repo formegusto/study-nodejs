@@ -58,34 +58,3 @@ describe("isNotLoggedIn", () => {
     expect(next).toBeCalledTimes(1);
   });
 });
-
-describe("verifyToken", () => {
-  const res = {
-    status: jest.fn(() => res),
-    json: jest.fn(),
-  };
-
-  const req = {
-    headers: {
-      authorization: 1,
-    },
-  };
-
-  const next = jest.fn();
-  test("토큰이 정상 적이면 next 호출", () => {
-    jwt.verify.mockReturnValue("okay");
-    verifyToken(req, res, next);
-    expect(next).toBeCalledTimes(1);
-  });
-  test("토큰이 만료되면 419 에러와 메시지 출력", () => {
-    jwt.verify.mockReturnValue(new Error({ name: "TokenExpiredError" }));
-    verifyToken(req, res, next);
-    expect(next).toBeCalledTimes(2);
-    // expect(res.status).toBeCalledWith(419);
-    // expect(res.json.code).toBeCalledWith({
-    //   code: 419,
-    //   message: "토큰이 만료되었습니다",
-    // });
-  });
-  // test("유효하지 않은 토큰이면 401 에러와 메시지 출력", () => {});
-});
