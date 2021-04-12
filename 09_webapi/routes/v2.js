@@ -117,4 +117,34 @@ router.get(
   }
 );
 
+router.get("/follow/my", verifyToken, apiLimiter, async (req, res, next) => {
+  try {
+    const user = await User.findOne({
+      include: [
+        {
+          model: User,
+          attributes: ["id", "nick"],
+          as: "Followers",
+        },
+        {
+          model: User,
+          attributes: ["id", "nick"],
+          as: "Followings",
+        },
+      ],
+      where: {
+        id: req.decoded.id,
+      },
+    });
+
+    return res.json({
+      status: 200,
+      payload: user,
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
 module.exports = router;
