@@ -1,0 +1,23 @@
+{
+  "name": "11_socket",
+  "version": "1.0.0",
+  "description": "GIF 웹 소켓 채팅방",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "morgan": "^1.10.0",
+    "nunjucks": "^3.2.1",
+    "ws": "^7.4.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+  "author": "formegusto",
+  "license": "ISC"
+}
