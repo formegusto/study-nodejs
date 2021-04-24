@@ -25,7 +25,7 @@ module.exports = class Good extends Sequelize.Model {
         modelName: "Good",
         tableName: "goods",
         charset: "utf8",
-        collate: "tuf8_general_ci",
+        collate: "utf8_general_ci",
       }
     );
   }
@@ -35,6 +35,4 @@ module.exports = class Good extends Sequelize.Model {
     db.Good.belongsTo(db.User, { as: "Sold" });
     db.Good.hasMany(db.Auction);
   }
-
-  static associate(db) {}
 };
