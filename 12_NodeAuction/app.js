@@ -10,8 +10,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 const indexRouter = require("./routes");
 const authRouter = require("./routes/auth");
-const { Sequelize, sequelize } = require("./models");
+const { sequelize } = require("./models");
 const passportConfig = require("./passport");
+const sse = require("./sse");
+const webSocket = require("./socket");
 
 const app = express();
 passportConfig();
@@ -66,6 +68,9 @@ app.use((err, req, res, next) => {
   res.render("error");
 });
 
-app.listen(app.get("port"), () => {
+const server = app.listen(app.get("port"), () => {
   console.log(app.get("port"), "번 포트 대기 중!");
 });
+
+webSocket(server, app);
+sse(server);
