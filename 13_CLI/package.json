@@ -6,6 +6,7 @@
   "author": "formegusto",
   "license": "ISC",
   "bin": {
-    "cli": "./index.js"
+    "cli": "./index.js",
+    "cli_template": "./template.js"
   }
 }
