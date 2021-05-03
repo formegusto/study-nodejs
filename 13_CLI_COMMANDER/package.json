@@ -1,0 +1,16 @@
+{
+  "name": "13_cli_commander",
+  "version": "1.0.0",
+  "description": "cli_commander",
+  "main": "index.js",
+  "author": "formegusto",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "commander": "^7.2.0",
+    "inquirer": "^8.0.0"
+  },
+  "bin": {
+    "cli_command": "./command.js"
+  }
+}
