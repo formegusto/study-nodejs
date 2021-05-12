@@ -15,6 +15,16 @@ const v1 = require("./routes/v1");
 const v2 = require("./routes/v2");
 const { sequelize } = require("./models");
 const passportConfig = require("./passport");
+const logger = require("./logger");
+const helmet = require("helmet");
+const hpp = require("hpp");
+const redis = require("redis");
+const RedisStore = require("connect-redis")(session);
+
+const redisClient = redis.createClient({
+  url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+  password: process.env.REDIS_PASSWORD,
+});
 
 const app = express();
 passportConfig();
@@ -35,6 +45,8 @@ sequelize
 
 if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
+  app.use(helmet({ contentSecurityPolicy: false }));
+  app.use(hpp());
 } else {
   app.use(morgan("dev"));
 }
@@ -50,6 +62,7 @@ const sessionOption = {
     httpOnly: true,
     secure: false,
   },
+  store: new RedisStore({ client: redisClient }),
 };
 if (process.env.NODE_ENV === "production") {
   sessionOption.proxy = true;
@@ -67,6 +80,8 @@ app.use("/", indexRouter);
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
   error.status = 404;
+  logger.info("hello");
+  logger.error(error.message);
   next(error);
 });
 
