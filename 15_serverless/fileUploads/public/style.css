@@ -1,0 +1,21 @@
+#img-preview {
+  display: none;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+#img-label {
+  display: flex;
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+
+  cursor: pointer;
+}
+
+#img {
+  display: none;
+}
