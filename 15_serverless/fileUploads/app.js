@@ -3,6 +3,7 @@ const nunjucks = require("nunjucks");
 const dotenv = require("dotenv");
 const path = require("path");
 const morgan = require("morgan");
+const { sequelize } = require("./models");
 
 dotenv.config();
 
@@ -13,6 +14,15 @@ nunjucks.configure("views", {
   express: app,
   watch: true,
 });
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log("Sequelize Connected");
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/img", express.static(path.join(__dirname, "upload")));
