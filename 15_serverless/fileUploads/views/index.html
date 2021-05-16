@@ -8,6 +8,13 @@
         <input name="img" id="img" type="file" accept="image/*"/>
         <button type="submit">Upload</button>
     </form>
+    <div id="img-wrap">
+        {% for img in imgs %}
+            <div id="img-block">
+                <img src="{{img.path}}" alt="img"/>
+            </div>
+        {% endfor %}
+    </div>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>

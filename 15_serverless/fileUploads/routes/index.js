@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
+const { Img } = require("../models");
 const router = express.Router();
 
 const upload = multer({
@@ -16,12 +17,24 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-router.get("/", (req, res, next) => {
-  res.render("index");
+router.get("/", async (req, res, next) => {
+  const imgs = await Img.findAll({ order: [["id", "DESC"]] });
+  res.render("index", {
+    imgs: imgs,
+  });
 });
 
-router.post("/post", upload.single("img"), (req, res, next) => {
-  res.redirect("/");
+router.post("/post", upload.single("img"), async (req, res, next) => {
+  if (req.file) {
+    await Img.create({
+      path: `/img/${req.file.filename}`,
+    });
+    res.redirect("/");
+  } else {
+    const error = new Error(`파일이 존재하지 않습니다.`);
+    error.status = 400;
+    next(error);
+  }
 });
 
 const fs = require("fs");
