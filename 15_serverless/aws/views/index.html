@@ -11,7 +11,10 @@
     <div id="img-wrap">
         {% for img in imgs %}
             <div id="img-block">
-                <img src="{{img.path}}" alt="img"/>
+                <img 
+                    src="{{img.path}}" 
+                    onerror="this.src = this.src.replace(/\/thumb\//, '/original/');"
+                    alt="img"/>
             </div>
         {% endfor %}
     </div>

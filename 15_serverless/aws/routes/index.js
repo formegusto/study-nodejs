@@ -41,8 +41,10 @@ router.get("/", async (req, res, next) => {
 router.post("/post", upload.single("img"), async (req, res, next) => {
   console.log(req.file);
   if (req.file) {
+    const originalUrl = req.file.location;
+    const url = originalUrl.replace(/\/original\//, "/thumb/");
     await Img.create({
-      path: req.file.location,
+      path: url,
     });
     res.redirect("/");
   } else {
