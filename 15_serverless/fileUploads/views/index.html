@@ -1,13 +1,14 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <form id="upload" method="post" action="post" enctype="multipart/form-data">
+    <form id="upload" method="post" action="/post" enctype="multipart/form-data">
         <label id="img-label" for="img">
             <img id="img-preview" alt="img-preview" src="" />
         </label>
-        <input id="img" type="file" accept="image/*"/>
+        <input name="img" id="img" type="file" accept="image/*"/>
         <button type="submit">Upload</button>
     </form>
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         function readURL(input) {
@@ -23,6 +24,7 @@
             }
         }
 
+        
         document.getElementById("img").addEventListener('change', function(e) {
             readURL(this);
         });

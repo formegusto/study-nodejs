@@ -2,6 +2,7 @@ const express = require("express");
 const nunjucks = require("nunjucks");
 const dotenv = require("dotenv");
 const path = require("path");
+const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const { sequelize } = require("./models");
 
@@ -26,6 +27,8 @@ sequelize
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/img", express.static(path.join(__dirname, "upload")));
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 const indexRouter = require("./routes");
 
