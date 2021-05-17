@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <form id="upload" method="post" action="/post" enctype="multipart/form-data">
+        <label id="img-label" for="img">
+            <img id="img-preview" alt="img-preview" src="" />
+        </label>
+        <input name="img" id="img" type="file" accept="image/*"/>
+        <button type="submit">Upload</button>
+    </form>
+    <div id="img-wrap">
+        {% for img in imgs %}
+            <div id="img-block">
+                <img src="{{img.path}}" alt="img"/>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+            
+                reader.onload = function (e) {
+                    document.getElementById("img-preview").setAttribute("src", e.target.result);
+                    document.getElementById("img-preview").style.display = "inline";
+                }
+            
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        
+        document.getElementById("img").addEventListener('change', function(e) {
+            readURL(this);
+        });
+    </script>
+{% endblock %}
