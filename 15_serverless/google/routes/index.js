@@ -3,16 +3,21 @@ const multer = require("multer");
 const path = require("path");
 const { Img } = require("../models");
 const router = express.Router();
+const multerGoogleStorage = require("multer-google-storage");
+
+const fs = require("fs");
+try {
+  fs.readdirSync("upload");
+} catch (err) {
+  console.log("uploads 폴더가 없어 생성합니다.");
+  fs.mkdirSync("upload");
+}
 
 const upload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, cb) {
-      cb(null, "upload/");
-    },
-    filename(req, file, cb) {
-      const ext = path.extname(file.originalname);
-      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
-    },
+  storage: multerGoogleStorage.storageEngine({
+    bucket: "thbird",
+    projectId: "node-deploy-313700",
+    keyFilename: "node-deploy-313700-d3e16cbf2673.json",
   }),
   limits: { fileSize: 5 * 1024 * 1024 },
 });
@@ -25,9 +30,10 @@ router.get("/", async (req, res, next) => {
 });
 
 router.post("/post", upload.single("img"), async (req, res, next) => {
+  console.log(req.file);
   if (req.file) {
     await Img.create({
-      path: `/img/${req.file.filename}`,
+      path: req.file.path,
     });
     res.redirect("/");
   } else {
@@ -36,13 +42,5 @@ router.post("/post", upload.single("img"), async (req, res, next) => {
     next(error);
   }
 });
-
-const fs = require("fs");
-try {
-  fs.readdirSync("upload");
-} catch (err) {
-  console.log("uploads 폴더가 없어 생성합니다.");
-  fs.mkdirSync("upload");
-}
 
 module.exports = router;
